@@ -1,0 +1,105 @@
+/* ============================================================
+   ANIMATIONS — pastel pink birthday theme
+   ============================================================ */
+
+/* ── Floating hearts ──────────────────────────────────── */
+@keyframes floatHeart {
+  0%   { transform: translateY(0) rotate(-10deg) scale(1);   opacity: 0.7; }
+  25%  { transform: translateY(-18px) rotate(5deg) scale(1.08); }
+  50%  { transform: translateY(-8px) rotate(-5deg) scale(1.04); opacity: 0.9; }
+  75%  { transform: translateY(-22px) rotate(8deg) scale(1.06); }
+  100% { transform: translateY(0) rotate(-10deg) scale(1);   opacity: 0.7; }
+}
+
+/* ── Drifting hearts (background) ─────────────────────── */
+@keyframes driftUp {
+  0%   { transform: translateY(110vh) rotate(0deg) scale(0.6);  opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+/* ── Star twinkle ─────────────────────────────────────── */
+@keyframes twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg);    opacity: 0.6; }
+  25%       { transform: scale(1.4) rotate(15deg); opacity: 1;   }
+  50%       { transform: scale(0.8) rotate(-10deg); opacity: 0.4; }
+  75%       { transform: scale(1.2) rotate(5deg);  opacity: 0.9; }
+}
+
+/* ── Spin star ────────────────────────────────────────── */
+@keyframes spinStar {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* ── Pulse glow ───────────────────────────────────────── */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(249,85,142,0.3), 0 0 40px rgba(249,85,142,0.1); }
+  50%       { box-shadow: 0 0 40px rgba(249,85,142,0.6), 0 0 80px rgba(249,85,142,0.25); }
+}
+
+/* ── Gentle float (illustration) ──────────────────────── */
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%       { transform: translateY(-16px) rotate(1deg); }
+}
+
+/* ── Shimmer (button) ─────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Bounce in ────────────────────────────────────────── */
+@keyframes bounceIn {
+  0%   { transform: scale(0) translateY(40px); opacity: 0; }
+  60%  { transform: scale(1.1) translateY(-8px); opacity: 1; }
+  80%  { transform: scale(0.96) translateY(2px); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ── Fade up ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  0%   { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Scale in ─────────────────────────────────────────── */
+@keyframes scaleIn {
+  0%   { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Paper texture shake (subtle) ────────────────────── */
+@keyframes paperShift {
+  0%, 100% { background-position: 0% 0%; }
+  50%       { background-position: 1% 1%; }
+}
+
+/* ── Heartbeat ────────────────────────────────────────── */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.15); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.12); }
+  70%       { transform: scale(1); }
+}
+
+/* ── Confetti fall ────────────────────────────────────── */
+@keyframes confettiFall {
+  0%   { transform: translateY(-10px) rotate(0deg) scale(0.8); opacity: 1; }
+  100% { transform: translateY(60px) rotate(360deg) scale(0.6); opacity: 0; }
+}
+
+/* ── Utility animation classes ────────────────────────── */
+.animate-float-heart  { animation: floatHeart 3s ease-in-out infinite; }
+.animate-twinkle      { animation: twinkle 2.5s ease-in-out infinite; }
+.animate-spin-star    { animation: spinStar 8s linear infinite; }
+.animate-pulse-glow   { animation: pulseGlow 2.5s ease-in-out infinite; }
+.animate-gentle-float { animation: gentleFloat 4s ease-in-out infinite; }
+.animate-heartbeat    { animation: heartbeat 1.8s ease-in-out infinite; }
+.animate-bounce-in    { animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-fade-up      { animation: fadeUp 0.7s ease-out both; }
+.animate-drift-up     { animation: driftUp linear infinite; }

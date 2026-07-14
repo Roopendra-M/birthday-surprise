@@ -1,0 +1,261 @@
+/* ============================================================
+   GiftBox.module.css — Animated premium pink gift box
+   ============================================================ */
+
+/* ── Root wrapper ───────────────────────────────────────── */
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+/* ── Radial glow ────────────────────────────────────────── */
+.glow {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(220px, 40vw, 340px);
+  height: clamp(40px, 8vw, 60px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(249,85,142,0.5) 0%, transparent 70%);
+  filter: blur(20px);
+  z-index: 0;
+}
+
+/* ── Particle field ─────────────────────────────────────── */
+.particleField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.particle {
+  position: absolute;
+  display: inline-block;
+  pointer-events: none;
+  transform-origin: center;
+}
+
+/* ══════════════════════════════════════════════════════════
+   GIFT BOX VISUAL
+══════════════════════════════════════════════════════════ */
+.gift {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  z-index: 1;
+}
+
+/* ── LID ────────────────────────────────────────────────── */
+.lid {
+  position: relative;
+  width: clamp(250px, 42vw, 320px);
+  z-index: 5;
+}
+
+.lidFace {
+  height: clamp(70px, 12vw, 90px);
+  background: linear-gradient(160deg, #ffc8de 0%, #f97bb8 50%, #e06090 100%);
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 -6px 20px rgba(233,30,120,0.18),
+    0 0 0 1px rgba(255,200,220,0.55) inset;
+}
+
+.lidBottom {
+  height: 10px;
+  background: linear-gradient(180deg, #d4185a, #b0123f);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Lid shine */
+.lidShine {
+  position: absolute;
+  top: 8px; left: 12px;
+  width: 35%; height: 30%;
+  background: rgba(255,255,255,0.22);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  pointer-events: none;
+}
+
+/* ── BOX BODY ───────────────────────────────────────────── */
+.body {
+  position: relative;
+  width: clamp(230px, 38vw, 295px);
+  z-index: 2;
+}
+
+.bodyFace {
+  height: clamp(170px, 30vw, 220px);
+  background: linear-gradient(165deg, #ffb3d1 0%, #f97bb8 45%, #e91e78 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 8px 32px rgba(233,30,120,0.25),
+    0 0 0 1px rgba(255,180,210,0.55) inset;
+}
+
+/* 3-D side illusion */
+.bodySide {
+  position: absolute;
+  top: 0; right: -14px;
+  width: 16px;
+  height: clamp(170px, 30vw, 220px);
+  background: linear-gradient(90deg, #d4185a, #9c0f3f);
+  transform-origin: left;
+  transform: skewY(-1deg);
+}
+
+.bodyBottom {
+  height: 14px;
+  background: linear-gradient(180deg, #b0123f, #8b0c30);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+/* Body shine */
+.bodyShine {
+  position: absolute;
+  top: 14px; left: 16px;
+  width: 28%; height: 22%;
+  background: rgba(255,255,255,0.18);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  pointer-events: none;
+}
+
+/* ── RIBBON ─────────────────────────────────────────────── */
+.ribbon {
+  position: absolute;
+  background: linear-gradient(135deg, #ffe580 0%, #ffd020 50%, #ffc000 100%);
+  box-shadow: 0 0 8px rgba(200,150,0,0.25);
+}
+
+/* Lid ribbons */
+.ribbonLidV {
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 20px;
+  transform: translateX(-50%);
+}
+.ribbonLidH {
+  left: 0; right: 0;
+  top: 50%;
+  height: 18px;
+  transform: translateY(-50%);
+}
+
+/* Body ribbons */
+.ribbonBodyV {
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 20px;
+  transform: translateX(-50%);
+}
+.ribbonBodyH {
+  left: 0; right: 0;
+  top: 38%;
+  height: 20px;
+  transform: translateY(-50%);
+}
+
+/* ── BOW ────────────────────────────────────────────────── */
+.bowWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 72px;
+  z-index: 3;
+}
+
+.bowLoopL,
+.bowLoopR {
+  position: absolute;
+  width: 52px;
+  height: 46px;
+  background: linear-gradient(135deg, #ffe880 0%, #ffd020 60%, #ffa500 100%);
+  border-radius: 50%;
+  box-shadow: 0 3px 10px rgba(200,140,0,0.30);
+}
+
+.bowLoopL {
+  left: 0; top: 4px;
+  transform: rotate(-30deg);
+  transform-origin: right center;
+}
+.bowLoopR {
+  right: 0; top: 4px;
+  transform: rotate(30deg);
+  transform-origin: left center;
+}
+
+.bowKnot {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 22px; height: 22px;
+  background: radial-gradient(circle, #fff176, #ffd020);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(200,150,0,0.40);
+  z-index: 2;
+}
+
+.bowTailL,
+.bowTailR {
+  position: absolute;
+  bottom: 0;
+  width: 26px; height: 30px;
+  background: linear-gradient(180deg, #ffd020, #ffb300);
+  border-radius: 0 0 50% 50%;
+}
+.bowTailL { left: 36px; transform: rotate(-18deg); transform-origin: top center; }
+.bowTailR { right: 36px; transform: rotate(18deg);  transform-origin: top center; }
+
+/* ── Box content (visible when open) ────────────────────── */
+.boxContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.contentText {
+  font-size: 2.8rem;
+  letter-spacing: 0.15em;
+  filter: drop-shadow(0 4px 12px rgba(249,85,142,0.4));
+}
+
+/* ── Text labels ────────────────────────────────────────── */
+.cta, .opening, .opened {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: 700;
+  text-align: center;
+}
+.cta     { color: var(--pink-text-muted); animation: ctaPulse 2s ease-in-out infinite; }
+.opening { color: var(--pink-700); }
+.opened  {
+  color: var(--pink-800);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  text-shadow: 0 2px 8px rgba(249,85,142,0.25);
+}
+
+@keyframes ctaPulse {
+  0%,100% { opacity:.75; transform: translateY(0); }
+  50%      { opacity:1;   transform: translateY(-4px); }
+}

@@ -1,0 +1,98 @@
+/* ============================================================
+   surprise.module.css — Full-screen yes/no surprise page
+   ============================================================ */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--gradient-bg);
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+/* ── Paper texture ───────────────────────────────────────── */
+.paperTexture {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.055;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  mix-blend-mode: multiply;
+}
+
+/* ── Radial glow ─────────────────────────────────────────── */
+.radialGlow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    rgba(255, 192, 220, 0.42) 0%,
+    rgba(255, 220, 238, 0.20) 45%,
+    transparent 75%
+  );
+}
+
+/* ── Decorative blobs ────────────────────────────────────── */
+.blobTopLeft {
+  position: fixed;
+  top: -130px;
+  left: -130px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 180, 220, 0.38) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+  animation: blobPulse 6s ease-in-out infinite;
+}
+
+.blobBotRight {
+  position: fixed;
+  bottom: -130px;
+  right: -130px;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(169, 142, 255, 0.28) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+  animation: blobPulse 7s ease-in-out infinite reverse;
+}
+
+.blobTopRight {
+  position: fixed;
+  top: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 150, 0.20) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(35px);
+  animation: blobPulse 8s ease-in-out infinite;
+}
+
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.12); }
+}
+
+/* ── Main centered layout ────────────────────────────────── */
+.main {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}

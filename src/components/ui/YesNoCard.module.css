@@ -1,0 +1,284 @@
+/* ============================================================
+   YesNoCard.module.css — Interactive Yes / No surprise screen
+   ============================================================ */
+
+/* ── Main card ──────────────────────────────────────────── */
+.card {
+  position: relative;
+  width: min(520px, 94vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 2.8rem) clamp(1.8rem, 4vw, 2.6rem);
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur-lg);
+  -webkit-backdrop-filter: var(--blur-lg);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-3xl);
+  box-shadow:
+    var(--glass-shadow),
+    0 0 0 1px rgba(255, 255, 255, 0.65) inset,
+    0 2px 0 rgba(255, 255, 255, 0.90) inset;
+  overflow: visible; /* allow NO button to overflow for effect */
+}
+
+/* Glass shimmer overlay */
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.60)  0%,
+    rgba(255,240,248,0.28) 50%,
+    rgba(255,255,255,0.10) 100%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ── Puppy illustration ──────────────────────────────── */
+.puppyWrap {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.puppySvg {
+  width: clamp(160px, 28vw, 220px);
+  height: auto;
+  filter: drop-shadow(0 10px 30px rgba(249, 85, 142, 0.22));
+}
+
+/* ── Heading ─────────────────────────────────────────── */
+.heading {
+  font-family: var(--font-baloo), system-ui, sans-serif;
+  font-size: clamp(1.3rem, 3.5vw, 1.85rem);
+  font-weight: 800;
+  color: var(--pink-800);
+  text-align: center;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+  max-width: 38ch;
+}
+
+/* ── Subtitle ─────────────────────────────────────────── */
+.subtitle {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: var(--pink-text-muted);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Button arena ─────────────────────────────────────── */
+.arena {
+  position: relative;
+  width: 100%;
+  /* Fixed height so the NO button can teleport within bounds */
+  height: 240px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+@media (max-width: 480px) {
+  .arena {
+    height: 260px;
+  }
+}
+
+/* ── YES button ──────────────────────────────────────── */
+.yesBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.8rem;
+  background: var(--gradient-button);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: var(--font-baloo), system-ui, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  box-shadow:
+    var(--shadow-button),
+    0 0 30px rgba(249,85,142,0.25);
+  overflow: hidden;
+  letter-spacing: 0.02em;
+  z-index: 2;
+  /* Transform origin for scale growth */
+  transform-origin: center;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.yesBtnShimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 28%,
+    rgba(255,255,255,0.38) 50%,
+    transparent 72%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.2s linear infinite;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.yesBtnContent {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── NO button ───────────────────────────────────────── */
+.noBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  padding: 0.75rem 1.8rem;
+  background: rgba(255, 255, 255, 0.70);
+  border: 2px solid rgba(180, 180, 200, 0.45);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-family: var(--font-baloo), system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--pink-700);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06),
+    0 1px 3px rgba(0,0,0,0.05);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+  z-index: 3;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.noBtn:hover {
+  background: rgba(255, 240, 248, 0.85);
+  border-color: rgba(249, 123, 184, 0.5);
+}
+
+/* Flash effect when NO dodges */
+.noBtnFlash {
+  border-color: rgba(239, 68, 68, 0.6) !important;
+  background: rgba(255, 235, 235, 0.85) !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.25) !important;
+}
+
+/* ── Hint text ───────────────────────────────────────── */
+.hint {
+  font-family: var(--font-patrick), cursive;
+  font-size: 0.82rem;
+  color: var(--pink-text-soft);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════════════════════
+   Success card
+══════════════════════════════════════════════════════ */
+.successCard {
+  position: relative;
+  width: min(520px, 94vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 2.8rem);
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur-lg);
+  -webkit-backdrop-filter: var(--blur-lg);
+  border: 1.5px solid rgba(34, 197, 94, 0.45);
+  border-radius: var(--radius-3xl);
+  box-shadow:
+    var(--glass-shadow),
+    0 0 0 1px rgba(255, 255, 255, 0.65) inset,
+    0 0 60px rgba(34, 197, 94, 0.22),
+    0 0 120px rgba(34, 197, 94, 0.10);
+  overflow: visible;
+}
+
+/* ── Heart burst overlay ─────────────────────────────── */
+.heartBurst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+.burstHeart {
+  position: absolute;
+  display: inline-block;
+  transform-origin: center;
+  pointer-events: none;
+  /* base left/top set inline */
+  margin-left: -16px;
+  margin-top: -16px;
+}
+
+/* ── Success content ─────────────────────────────────── */
+.successIcon {
+  font-size: clamp(3rem, 8vw, 5rem);
+  filter: drop-shadow(0 4px 12px rgba(249,85,142,0.35));
+  position: relative;
+  z-index: 1;
+}
+
+.successHeading {
+  font-family: var(--font-baloo), system-ui, sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: var(--pink-800);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.successSubtitle {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--pink-text-muted);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Loading dots ────────────────────────────────────── */
+.dots {
+  display: flex;
+  gap: 0.55rem;
+  margin-top: 0.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--gradient-button);
+  box-shadow: 0 0 10px rgba(249, 85, 142, 0.55);
+}

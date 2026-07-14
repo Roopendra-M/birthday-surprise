@@ -1,0 +1,222 @@
+/* ============================================================
+   MusicPlayer.module.css — Floating music player
+   ============================================================ */
+
+/* ── Root (fixed bottom-right) ──────────────────────────── */
+.root {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+/* ══════════════════════════════════════════════════════════
+   EXPANDED PANEL
+══════════════════════════════════════════════════════════ */
+.panel {
+  width: min(260px, 85vw);
+  background: rgba(255, 255, 255, 0.70);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255, 180, 210, 0.55);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 8px 40px rgba(249, 85, 142, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.70) inset;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+/* ── Marquee song title ── */
+.titleWrap {
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: var(--radius-full);
+  background: rgba(255, 240, 248, 0.60);
+  padding: 0.3rem 0.6rem;
+}
+.marquee {
+  display: inline-block;
+  animation: marqueeScroll 14s linear infinite;
+}
+.marqueeInner {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--pink-700);
+  white-space: nowrap;
+}
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Equalizer ── */
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+  justify-content: center;
+  padding: 0 0.5rem;
+}
+
+.eqBar {
+  width: 5px;
+  height: 6px;
+  background: linear-gradient(180deg, #f97bb8, #e91e78);
+  border-radius: 2px 2px 0 0;
+  transition: height 0.2s;
+}
+
+.eqBarActive {
+  animation: eqBounce 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes eqBounce {
+  0%   { height: 5px;  opacity: 0.55; }
+  25%  { height: 22px; opacity: 1;    }
+  50%  { height: 10px; opacity: 0.75; }
+  75%  { height: 26px; opacity: 1;    }
+  100% { height: 8px;  opacity: 0.60; }
+}
+
+/* ── Control buttons ── */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ctrlBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 160, 198, 0.45);
+  background: rgba(255, 240, 248, 0.75);
+  color: var(--pink-700);
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.ctrlBtn:hover {
+  background: rgba(249, 123, 184, 0.20);
+  border-color: rgba(249, 123, 184, 0.70);
+  transform: scale(1.08);
+}
+.ctrlBtnOn {
+  background: linear-gradient(135deg, rgba(249,123,184,0.25), rgba(169,142,255,0.20));
+  border-color: rgba(249, 123, 184, 0.70);
+  box-shadow: 0 0 10px rgba(249, 85, 142, 0.22);
+}
+
+/* ── Volume row ── */
+.volRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.volIcon { font-size: 0.85rem; }
+
+.slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 160, 198, 0.35);
+  outline: none;
+  cursor: pointer;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f97bb8, #e91e78);
+  box-shadow: 0 0 6px rgba(249, 85, 142, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+.slider::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border-radius: 50%; border: none;
+  background: linear-gradient(135deg, #f97bb8, #e91e78);
+  cursor: pointer;
+}
+
+/* ── Hint text ── */
+.hint {
+  font-family: var(--font-patrick), cursive;
+  font-size: 0.7rem;
+  color: var(--pink-text-soft);
+  text-align: center;
+  line-height: 1.4;
+}
+.hint code {
+  font-family: monospace;
+  font-size: 0.68rem;
+  background: rgba(249,123,184,0.12);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   FLOATING ACTION BUTTON
+══════════════════════════════════════════════════════════ */
+.fab {
+  position: relative;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #f97bb8 0%, #e91e78 60%, #f75d97 100%);
+  box-shadow: 0 6px 24px rgba(233, 30, 120, 0.40), 0 2px 8px rgba(233, 30, 120, 0.20);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  overflow: visible;
+  color: white;
+  transition: box-shadow 0.3s;
+}
+.fabPlaying {
+  box-shadow:
+    0 6px 28px rgba(233, 30, 120, 0.55),
+    0 0 0 3px rgba(249, 123, 184, 0.35),
+    0 0 30px rgba(249, 85, 142, 0.30);
+}
+
+/* Note icon */
+.noteIcon { font-size: 1.5rem; }
+
+/* Mini equalizer on FAB */
+.fabEq {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 22px;
+}
+.fabEqBar {
+  width: 4px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 2px 2px 0 0;
+}
+
+/* Pulse ring (when playing) */
+.pulseRing {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(249,123,184,0.55);
+  animation: fabPulse 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes fabPulse {
+  0%, 100% { transform: scale(1);    opacity: 0.60; }
+  50%       { transform: scale(1.20); opacity: 0.25; }
+}

@@ -1,0 +1,156 @@
+/* ============================================================
+   ending-page.module.css — Grand finale ending page
+   ============================================================ */
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--gradient-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.radialGlow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(ellipse 75% 65% at 50% 50%, rgba(255,192,220,.50) 0%, rgba(255,220,238,.24) 45%, transparent 75%);
+}
+
+.blobTL {
+  position: fixed; top: -130px; left: -130px; width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,180,220,.42) 0%, transparent 70%); filter: blur(40px);
+  pointer-events: none; z-index: 1; animation: bP 7s ease-in-out infinite;
+}
+.blobBR {
+  position: fixed; bottom: -130px; right: -130px; width: 470px; height: 470px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(169,142,255,.30) 0%, transparent 70%); filter: blur(40px);
+  pointer-events: none; z-index: 1; animation: bP 8s ease-in-out infinite reverse;
+}
+.blobTC {
+  position: fixed; top: -60px; left: 50%; transform: translateX(-50%); width: 360px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,230,100,.18) 0%, transparent 70%); filter: blur(30px);
+  pointer-events: none; z-index: 1; animation: bP 9s ease-in-out infinite;
+}
+@keyframes bP { 0%,100% { transform: scale(1); } 50% { transform: scale(1.10); } }
+
+/* ── Stars ── */
+.starField { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+.star { position: absolute; display: inline-block; animation: starTwinkle 2.8s ease-in-out infinite; }
+@keyframes starTwinkle {
+  0%,100% { transform: scale(1) rotate(0deg);    opacity: .65; }
+  30%      { transform: scale(1.5) rotate(25deg);  opacity: 1;   }
+  60%      { transform: scale(0.8) rotate(-10deg); opacity: .4;  }
+}
+
+/* ── Floating hearts ── */
+.heartLayer { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.floatHeart { position: absolute; bottom: -60px; animation: heartRise linear infinite; }
+@keyframes heartRise {
+  0%   { transform: translateY(0) rotate(-12deg) scale(0.8); opacity: 0; }
+  8%   { opacity: .8; }
+  90%  { opacity: .5; }
+  100% { transform: translateY(calc(-100vh - 80px)) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+/* ── Main ── */
+.main {
+  position: relative; z-index: 2; flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2rem; padding: 2rem 1rem 6rem;
+}
+
+/* ── Heading ── */
+.headingWrap { text-align: center; }
+
+.heading {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  /* Animated gradient text */
+  background: linear-gradient(135deg, #e91e78 0%, #f97bb8 30%, #a98eff 60%, #e91e78 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s linear infinite;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0%   center; }
+  100% { background-position: 300% center; }
+}
+
+.subtitle {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+  color: var(--pink-text-muted);
+  margin-top: 0.5rem;
+  max-width: 42ch;
+}
+
+/* ── Illustration ── */
+.illustrationWrap {
+  filter: drop-shadow(0 16px 40px rgba(249,85,142,.22));
+}
+.illustration { width: clamp(220px, 38vw, 320px); height: auto; }
+
+/* ── Buttons ── */
+.btnRow {
+  display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center;
+}
+
+.primaryBtn {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.9rem 2.4rem;
+  background: var(--gradient-button);
+  border: none; border-radius: var(--radius-full); color: white;
+  font-family: var(--font-baloo), sans-serif; font-size: 1.05rem; font-weight: 800;
+  cursor: pointer; box-shadow: var(--shadow-button); overflow: hidden;
+  letter-spacing: 0.02em;
+}
+.btnShimmer {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.40) 50%, transparent 70%);
+  background-size: 200% 100%; animation: shimmer 2s linear infinite; pointer-events: none;
+}
+@keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+
+.secondaryBtn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.85rem 1.8rem;
+  background: rgba(255,255,255,.70); backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255,160,198,.45); border-radius: var(--radius-full);
+  color: var(--pink-700);
+  font-family: var(--font-baloo), sans-serif; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; box-shadow: 0 4px 16px rgba(249,85,142,.10);
+  transition: all 0.2s;
+}
+.secondaryBtn:hover {
+  background: rgba(255,240,248,.90);
+  border-color: rgba(249,123,184,.6);
+}
+
+/* ── Note ── */
+.note {
+  font-family: var(--font-patrick), cursive;
+  font-size: 0.82rem;
+  color: var(--pink-text-soft);
+  text-align: center;
+}
+
+/* ── Footer ── */
+.footer {
+  position: relative; z-index: 2;
+  padding: 1.25rem 1rem;
+  font-family: var(--font-patrick), cursive;
+  font-size: 0.92rem;
+  color: var(--pink-text-muted);
+  text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 0.1rem;
+  border-top: 1px solid rgba(255,180,210,.30);
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(8px);
+}

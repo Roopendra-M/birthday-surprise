@@ -1,0 +1,63 @@
+/* ============================================================
+   CursorEffects.module.css
+   ============================================================ */
+
+/* Full-screen canvas — above everything, pointer-events off */
+.canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9995;
+}
+
+/* ── Custom cursor dot ─────────────────────────────────── */
+.dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #f97bb8 60%);
+  box-shadow: 0 0 8px rgba(249,85,142,0.70), 0 0 16px rgba(249,85,142,0.35);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  will-change: transform;
+  /* Instant follow */
+  transition: opacity 0.2s, width 0.2s, height 0.2s, background 0.2s;
+}
+
+.dotHover {
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #ffffff 0%, #e91e78 55%);
+  box-shadow: 0 0 14px rgba(233,30,120,0.80), 0 0 28px rgba(233,30,120,0.40);
+}
+
+/* ── Cursor ring ────────────────────────────────────────── */
+.ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(249,123,184,0.65);
+  background: rgba(249,123,184,0.06);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  will-change: transform;
+  /* Slight delay = trailing ring effect */
+  transition: transform 0.10s ease-out, opacity 0.2s,
+              width 0.25s, height 0.25s, border-color 0.25s, background 0.25s;
+}
+
+.ringHover {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(233,30,120,0.80);
+  background: rgba(249,123,184,0.12);
+  box-shadow: 0 0 18px rgba(249,85,142,0.30);
+}

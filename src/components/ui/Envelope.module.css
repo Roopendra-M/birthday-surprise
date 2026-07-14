@@ -1,0 +1,296 @@
+/* ============================================================
+   Envelope.module.css — Premium Pink Interactive Envelope
+   ============================================================ */
+
+/* ── Root wrapper ────────────────────────────────────────── */
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.root:focus-visible .perspectiveWrap {
+  outline: 3px solid rgba(249, 123, 184, 0.6);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ── Shadow blob ─────────────────────────────────────────── */
+.shadow {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(200, 80, 130, 0.35);
+  filter: blur(16px);
+  z-index: 0;
+}
+
+/* ── Perspective wrapper ─────────────────────────────────── */
+.perspectiveWrap {
+  position: relative;
+  display: block;
+  width: clamp(280px, 50vw, 440px);
+  /* Let body define the height */
+  filter: drop-shadow(0 12px 32px rgba(249, 85, 142, 0.28));
+  z-index: 1;
+  will-change: transform, filter;
+}
+
+/* Paper texture overlay */
+.paperTexture {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  border-radius: 4px;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+  mix-blend-mode: overlay;
+}
+
+/* ── Envelope body ───────────────────────────────────────── */
+.body {
+  position: relative;
+  width: 100%;
+  /* Fixed aspect ratio: classic envelope 3:2 */
+  aspect-ratio: 3 / 2;
+  background: linear-gradient(160deg, #ffd6ea 0%, #f97bb8 45%, #e91e78 100%);
+  border-radius: 4px;
+  overflow: visible;
+  /* Inset shine */
+  box-shadow:
+    0 0 0 1.5px rgba(255, 180, 210, 0.60) inset,
+    0 2px 0 rgba(255, 255, 255, 0.55) inset,
+    0 8px 32px rgba(233, 30, 120, 0.22);
+}
+
+/* ── Back of envelope (solid base) ──────────────────────── */
+.back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #ffb3d1 0%, #f97bb8 60%, #d4185a 100%);
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* ── Bottom fold (diamond/triangle) ─────────────────────── */
+/* Points upward from center of bottom edge — sits above back */
+.bottomFold {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  clip-path: polygon(0% 100%, 50% 40%, 100% 100%);
+  background: linear-gradient(170deg, #ffc8de 0%, #f97bb8 60%, #e06090 100%);
+  z-index: 1;
+}
+
+/* ── Left fold ───────────────────────────────────────────── */
+.leftFold {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0% 0%, 0% 100%, 50% 50%);
+  background: linear-gradient(90deg, #ffaed4 0%, #f07aaa 100%);
+  z-index: 2;
+}
+
+/* ── Right fold ──────────────────────────────────────────── */
+.rightFold {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(100% 0%, 50% 50%, 100% 100%);
+  background: linear-gradient(270deg, #ffaed4 0%, #ec78a8 100%);
+  z-index: 2;
+}
+
+/* ── Letter (slides upward when open) ───────────────────── */
+.letter {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 10%;
+  /* Intentionally taller than envelope so it can slide up */
+  height: 88%;
+  background: linear-gradient(160deg, #fffaf8 0%, #fff5f0 100%);
+  border-radius: 3px 3px 2px 2px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  z-index: 3;
+  /* Paper lines */
+  background-image:
+    linear-gradient(160deg, #fffaf8 0%, #fff5f0 100%),
+    repeating-linear-gradient(
+      transparent,
+      transparent 22px,
+      rgba(255,160,200,0.18) 22px,
+      rgba(255,160,200,0.18) 23px
+    );
+}
+
+.letterContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.2rem 0.8rem;
+}
+
+.letterHeart {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  filter: drop-shadow(0 2px 6px rgba(249,85,142,0.35));
+}
+
+.letterLine {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(249,123,184,0.4), transparent);
+  border-radius: 1px;
+}
+
+.letterSignature {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+  color: #e91e78;
+  margin-top: 0.2rem;
+}
+
+/* ── Top flap ────────────────────────────────────────────── */
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Makes a downward-pointing triangle: visible as the closed top */
+  height: 55%;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 88%);
+  background: linear-gradient(175deg, #ffc8de 0%, #f97bb8 55%, #e06090 100%);
+  /* Subtle seam line at fold */
+  box-shadow: 0 4px 12px rgba(220,50,100,0.15) inset;
+  z-index: 8;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Inner face of flap (shown when open = rotated) */
+.flapInner {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 88%);
+  background: linear-gradient(175deg, #ffe4ef 0%, #ffc8de 100%);
+  transform: rotateX(180deg);
+  backface-visibility: visible;
+}
+
+/* ── Ribbon ──────────────────────────────────────────────── */
+.ribbonWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+}
+
+/* Horizontal band */
+.ribbonH {
+  position: absolute;
+  top: 50%;
+  left: -2%;
+  right: -2%;
+  height: 10%;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, #ffe066, #ffcf40, #ffe066);
+  box-shadow: 0 2px 8px rgba(200,150,0,0.22);
+}
+
+/* Vertical band */
+.ribbonV {
+  position: absolute;
+  left: 50%;
+  top: -2%;
+  bottom: -2%;
+  width: 9%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #ffe066, #ffcf40, #ffe066);
+  box-shadow: 2px 0 8px rgba(200,150,0,0.18);
+}
+
+/* Bow loops */
+.bowLoop {
+  position: absolute;
+  top: 50%;
+  width: 22%;
+  height: 22%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffe580, #ffd020, #ffc000);
+  box-shadow: 0 3px 10px rgba(200,140,0,0.28);
+  transform-origin: center;
+}
+
+.bowLeft {
+  right: 54%;
+  transform: translateY(-50%) rotate(-25deg);
+}
+.bowRight {
+  left: 54%;
+  transform: translateY(-50%) rotate(25deg);
+}
+
+/* Bow knot center */
+.bowKnot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 9%;
+  height: 9%;
+  background: radial-gradient(circle, #fff176, #ffd020);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(200,150,0,0.35);
+}
+
+/* ── Wax seal ────────────────────────────────────────────── */
+.waxSealWrap {
+  position: absolute;
+  /* Centred on the fold seam where flap meets body */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -38%);
+  z-index: 10;
+  filter: drop-shadow(0 4px 12px rgba(139,0,69,0.45));
+  pointer-events: none;
+}
+
+/* ── Sparkle particles ───────────────────────────────────── */
+.sparkle {
+  position: absolute;
+  display: inline-block;
+  pointer-events: none;
+  transform-origin: center;
+  z-index: 20;
+  /* left / top / fontSize set inline */
+  margin-left: -12px;
+  margin-top: -12px;
+}
+
+/* ── CTA label ───────────────────────────────────────────── */
+.cta {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--pink-text-muted);
+  text-align: center;
+  animation: ctaPulse 2s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+  0%, 100% { opacity: 0.75; transform: translateY(0); }
+  50%       { opacity: 1;    transform: translateY(-4px); }
+}

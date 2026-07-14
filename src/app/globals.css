@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Design tokens ─────────────────────────────────────── */
+@import "../styles/tokens.css";
+@import "../styles/animations.css";
+@import "../styles/utilities.css";
+
+/* ── Base reset & global styles ───────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--pink-bg);
+  background-attachment: fixed;
+  color: var(--pink-text);
+  font-family: var(--font-poppins), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.625;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
+
+/* ── Custom scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(255, 182, 193, 0.2); }
+::-webkit-scrollbar-thumb { background: rgba(236, 100, 146, 0.5); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(236, 100, 146, 0.8); }
+
+/* ── Selection ────────────────────────────────────────── */
+::selection { background: rgba(255, 105, 155, 0.3); color: #c2185b; }
+
+/* ── Focus styles ─────────────────────────────────────── */
+:focus-visible { outline: 2px solid #f48fb1; outline-offset: 2px; border-radius: 0.5rem; }
+
+/* ── Links ────────────────────────────────────────────── */
+a { color: inherit; text-decoration: none; }
+
+/* ── Images ───────────────────────────────────────────── */
+img, video { max-width: 100%; height: auto; display: block; }
+
+/* ── Headings ─────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-baloo), system-ui, sans-serif;
+  font-weight: 700; line-height: 1.25; color: var(--pink-text);
+}
+
+/* ── Tailwind v4 theme ────────────────────────────────── */
+@theme inline {
+  --color-background: var(--pink-bg);
+  --color-foreground: var(--pink-text);
+}
+
+/* ══════════════════════════════════════════════════════════
+   CURSOR EFFECTS (global — used by CursorEffects component)
+══════════════════════════════════════════════════════════ */
+
+/* Hide native cursor when custom cursor is active */
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}
+
+/* Hover glow on interactive elements */
+.custom-cursor button:hover,
+.custom-cursor a:hover,
+.custom-cursor [role="button"]:hover {
+  box-shadow: 0 0 24px rgba(249, 85, 142, 0.50) !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+/* Heart trail animation (DOM-injected elements, must be global) */
+@keyframes heartFloat {
+  0%   { opacity: 0.95; transform: translate(calc(-50% + 0px), -50%) scale(0.85); }
+  40%  { opacity: 0.75; transform: translate(calc(-50% + var(--dx, 0px)), -90%) scale(1.1); }
+  100% { opacity: 0;    transform: translate(calc(-50% + var(--dx, 0px)), -150%) scale(0.7); }
+}
+
+/* Click ripple animation */
+@keyframes rippleOut {
+  0%   { width: 0;    height: 0;    opacity: 0.85; }
+  60%  {                            opacity: 0.40; }
+  100% { width: 90px; height: 90px; opacity: 0;    }
+}
+
+/* Skip to Content style (accessible, pure CSS hidden/focus transition) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 99999;
+  background: var(--pink-700);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  font-family: var(--font-baloo), sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.2s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid white;
+  outline-offset: -4px;
+}
+

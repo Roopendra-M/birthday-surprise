@@ -1,0 +1,112 @@
+/* ============================================================
+   PINK PASTEL DESIGN TOKENS
+   Cute birthday surprise theme — glassmorphism + pastels
+   ============================================================ */
+
+:root {
+  /* ── Pink Palette ─────────────────────────────────────── */
+  --pink-50:   #fff0f5;
+  --pink-100:  #ffe4ef;
+  --pink-200:  #ffc8de;
+  --pink-300:  #ffa0c6;
+  --pink-400:  #ff75aa;
+  --pink-500:  #f9558e;
+  --pink-600:  #e91e78;
+  --pink-700:  #c2185b;
+  --pink-800:  #a01050;
+  --pink-900:  #7a0c3a;
+
+  /* ── Rose / Blush ─────────────────────────────────────── */
+  --rose-100:  #ffe0ea;
+  --rose-200:  #ffc1d5;
+  --rose-300:  #ff9cbd;
+  --rose-400:  #ff6fa3;
+  --rose-500:  #f94282;
+
+  /* ── Lavender accents ─────────────────────────────────── */
+  --lavender-100: #f0eaff;
+  --lavender-200: #ddd1ff;
+  --lavender-300: #c4b0ff;
+  --lavender-400: #a98eff;
+  --lavender-500: #9b70f5;
+
+  /* ── Peach / Gold ─────────────────────────────────────── */
+  --peach-100: #fff3e8;
+  --peach-200: #ffe4c4;
+  --peach-300: #ffd09a;
+  --peach-400: #ffb870;
+
+  /* ── Semantic ─────────────────────────────────────────── */
+  --pink-bg:         #fff5f9;
+  --pink-bg-2:       #fff0f5;
+  --pink-surface:    rgba(255, 255, 255, 0.55);
+  --pink-surface-2:  rgba(255, 240, 245, 0.70);
+  --pink-border:     rgba(255, 160, 198, 0.35);
+  --pink-text:       #6b2046;
+  --pink-text-muted: #b5607a;
+  --pink-text-soft:  #d9879d;
+
+  /* ── Gradients ────────────────────────────────────────── */
+  --gradient-bg:     linear-gradient(135deg, #fff5f9 0%, #ffeef7 35%, #f8e8ff 65%, #fff0f8 100%);
+  --gradient-hero:   radial-gradient(ellipse at 60% 30%, #ffd6ea 0%, #ffe8f5 40%, #f8e0ff 70%, #fff5f9 100%);
+  --gradient-glass:  linear-gradient(135deg, rgba(255,255,255,0.70) 0%, rgba(255,240,248,0.50) 100%);
+  --gradient-button: linear-gradient(135deg, #f97bb8 0%, #e91e78 50%, #f75d97 100%);
+  --gradient-star:   linear-gradient(135deg, #ffe066 0%, #ffb347 100%);
+  --gradient-heart:  linear-gradient(135deg, #ff9cbd 0%, #f94282 100%);
+
+  /* ── Glass morphism ───────────────────────────────────── */
+  --glass-bg:      rgba(255, 255, 255, 0.55);
+  --glass-border:  rgba(255, 180, 210, 0.50);
+  --glass-shadow:  0 8px 32px rgba(249, 85, 142, 0.12), 0 2px 8px rgba(249, 85, 142, 0.08);
+  --glass-blur:    blur(20px);
+
+  /* ── Shadows (pink-tinted) ────────────────────────────── */
+  --shadow-sm:   0 2px 8px rgba(249, 85, 142, 0.10);
+  --shadow-md:   0 6px 24px rgba(249, 85, 142, 0.16);
+  --shadow-lg:   0 16px 48px rgba(249, 85, 142, 0.20);
+  --shadow-xl:   0 24px 80px rgba(249, 85, 142, 0.25);
+  --shadow-glow: 0 0 40px rgba(249, 85, 142, 0.35), 0 0 80px rgba(249, 85, 142, 0.15);
+  --shadow-button: 0 8px 32px rgba(233, 30, 120, 0.40), 0 2px 8px rgba(233, 30, 120, 0.20);
+
+  /* ── Radius ───────────────────────────────────────────── */
+  --radius-sm:   0.5rem;
+  --radius-md:   1rem;
+  --radius-lg:   1.5rem;
+  --radius-xl:   2rem;
+  --radius-2xl:  2.5rem;
+  --radius-3xl:  3rem;
+  --radius-full: 9999px;
+
+  /* ── Spacing ──────────────────────────────────────────── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ── Transitions ──────────────────────────────────────── */
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-bounce: 700ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ── Blur ─────────────────────────────────────────────── */
+  --blur-sm:  blur(8px);
+  --blur-md:  blur(20px);
+  --blur-lg:  blur(40px);
+
+  /* ── Z-Index ──────────────────────────────────────────── */
+  --z-below:   -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-overlay:  100;
+  --z-modal:    200;
+  --z-toast:    300;
+}
