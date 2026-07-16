@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Private data — feelings messages should never go to GitHub
+data/memories.json
+
+# Placeholder videos — user replaces these with real Instagram videos
+# Uncomment the line below if you want to exclude videos from the repo
+# public/videos/*.mp4

@@ -94,8 +94,8 @@ export default function GiftBox() {
     await fireConfetti();
     setTimeout(() => {
       setState("open");
-      // Navigate to gallery after a moment of celebration
-      setTimeout(() => router.push("/gallery"), 2500);
+      // Navigate to memory-theater after a moment of celebration
+      setTimeout(() => router.push("/memory-theater"), 2500);
     }, 1350);
   }, [state, router]);
 

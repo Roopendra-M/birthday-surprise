@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import BackgroundEffects from "@/components/effects/BackgroundEffects";
@@ -23,7 +23,9 @@ async function fireEnding() {
   } catch { /* no-op */ }
 }
 
-/* Download memories as an HTML file */
+/* ══════════════════════════════════════════════════
+   Gallery data (for HTML page)
+══════════════════════════════════════════════════ */
 const MEMORIES = [
   { emoji: "🎂", caption: "Birthday Wishes!",     bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)" },
   { emoji: "🌸", caption: "Beautiful You",         bg: "linear-gradient(135deg,#ead5ff,#c4b0ff)" },
@@ -35,27 +37,134 @@ const MEMORIES = [
   { emoji: "💫", caption: "Making Memories",       bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)" },
 ];
 
-function downloadMemories() {
+/* ══════════════════════════════════════════════════
+   Build HTML memories page (goes inside the ZIP)
+══════════════════════════════════════════════════ */
+function buildMemoriesHtml(): string {
   const cards = MEMORIES.map((m, i) => `
     <div style="display:inline-block;margin:14px;padding:14px 14px 36px;background:white;border-radius:3px;
-      box-shadow:0 4px 20px rgba(0,0,0,.12);transform:rotate(${(i % 3 - 1) * 3}deg);">
+      box-shadow:0 4px 20px rgba(0,0,0,.12);transform:rotate(${(i % 3 - 1) * 3}deg);vertical-align:top;">
       <div style="width:140px;height:140px;background:${m.bg};display:flex;align-items:center;justify-content:center;font-size:3.5rem;">${m.emoji}</div>
       <p style="margin:8px 0 0;font-family:Georgia,serif;font-size:0.85rem;color:#5a3848;text-align:center;font-style:italic;">${m.caption}</p>
     </div>`).join("");
 
-  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Special Memories 💕</title></head>
-<body style="margin:0;padding:40px 20px;background:linear-gradient(135deg,#fff5f9,#ffeef7,#f8e8ff);font-family:Georgia,serif;text-align:center;min-height:100vh;">
-  <h1 style="color:#e91e78;font-size:2.8rem;margin-bottom:8px;">💕 Special Memories 💕</h1>
-  <p style="color:#b5607a;font-size:1rem;margin-bottom:40px;">A little collection of joy, made with love.</p>
-  <div style="max-width:900px;margin:0 auto;">${cards}</div>
-  <footer style="margin-top:60px;color:#d9879d;font-size:0.85rem;">Made with ❤️ just for you</footer>
-</body></html>`;
+  const videoCards = [
+    { num: 1, label: "Our First Memory",  emoji: "🎬" },
+    { num: 2, label: "A Special Moment",  emoji: "💕" },
+    { num: 3, label: "Laughs & Joy",      emoji: "😄" },
+    { num: 4, label: "One Last Memory",   emoji: "✨" },
+  ].map(v => `
+    <div style="display:inline-block;margin:10px;width:180px;background:linear-gradient(135deg,#1a0025,#2d0040);
+      border-radius:14px;padding:18px 14px 14px;text-align:center;color:white;vertical-align:top;
+      box-shadow:0 8px 28px rgba(233,30,120,.35);">
+      <div style="font-size:2.8rem;margin-bottom:8px;">${v.emoji}</div>
+      <div style="font-size:0.7rem;letter-spacing:2px;opacity:0.6;text-transform:uppercase;margin-bottom:4px;">Video ${v.num} of 4</div>
+      <div style="font-family:Georgia,serif;font-size:0.92rem;font-style:italic;color:#ffc8de;">${v.label}</div>
+      <div style="margin-top:10px;font-size:0.72rem;opacity:0.55;">📁 videos/video${v.num}.mp4</div>
+    </div>`).join("");
 
-  const blob = new Blob([html], { type: "text/html" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href = url; a.download = "my-birthday-memories.html";
-  a.click(); URL.revokeObjectURL(url);
+  const songCards = [
+    { title: "Birthday Melody",   vibe: "Magic Vibes",     emoji: "✨" },
+    { title: "Celebration Beats", vibe: "Party Groove",    emoji: "🎈" },
+    { title: "Sweet Wishes",      vibe: "Loving Acoustic", emoji: "🌸" },
+  ].map(s => `
+    <div style="display:inline-flex;align-items:center;gap:14px;margin:8px;padding:14px 20px;
+      background:rgba(255,255,255,.85);border-radius:50px;
+      box-shadow:0 4px 16px rgba(249,85,142,.14);vertical-align:middle;max-width:260px;">
+      <span style="font-size:1.8rem;">${s.emoji}</span>
+      <div style="text-align:left;">
+        <div style="font-weight:700;color:#6b2046;font-size:0.9rem;">${s.title}</div>
+        <div style="font-size:0.75rem;color:#b5607a;font-style:italic;">${s.vibe}</div>
+      </div>
+      <span style="font-size:1.2rem;margin-left:auto;">🎵</span>
+    </div>`).join("");
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Our Special Memories 💕</title>
+<style>
+  body{margin:0;padding:40px 20px;background:linear-gradient(135deg,#fff5f9,#ffeef7,#f8e8ff);
+    font-family:Georgia,serif;text-align:center;min-height:100vh;}
+  h1{font-size:2.6rem;margin-bottom:6px;}
+  h2{font-size:1.4rem;margin:50px 0 6px;letter-spacing:-0.02em;}
+  .divider{display:inline-block;width:60px;height:3px;background:linear-gradient(90deg,#f97bb8,#a98eff);
+    border-radius:9999px;margin:6px 0 28px;}
+  p.sub{color:#b5607a;font-size:1rem;margin-bottom:0;font-style:italic;}
+  footer{margin-top:60px;color:#d9879d;font-size:0.82rem;}
+</style></head>
+<body>
+  <h1 style="color:#e91e78;">💕 Our Special Memories 💕</h1>
+  <p class="sub">A little collection of joy, made with love just for you.</p>
+
+  <h2 style="color:#e91e78;">📸 Memory Gallery</h2>
+  <div class="divider"></div><br>
+  <div style="max-width:960px;margin:0 auto;">${cards}</div>
+
+  <h2 style="color:#a98eff;">🎬 Memory Theater</h2>
+  <div class="divider" style="background:linear-gradient(90deg,#a98eff,#f97bb8);"></div><br>
+  <p class="sub" style="margin-bottom:20px;">Four cinematic moments, played just for you · Videos are in the <strong>videos/</strong> folder</p>
+  <div style="max-width:800px;margin:0 auto;">${videoCards}</div>
+
+  <h2 style="color:#f97bb8;">🎵 Music That Played</h2>
+  <div class="divider"></div><br>
+  <p class="sub" style="margin-bottom:20px;">The songs that made this moment magical</p>
+  <div style="max-width:700px;margin:0 auto;">${songCards}</div>
+
+  <footer>Made with ❤️ just for you · ${new Date().toLocaleDateString("en-IN", { year:"numeric", month:"long", day:"numeric" })}</footer>
+</body></html>`;
+}
+
+/* ══════════════════════════════════════════════════
+   ZIP download helper
+   Bundles: memories.html + videos/video1-4.mp4
+══════════════════════════════════════════════════ */
+async function downloadMemoriesZip(
+  setProgress: (p: string) => void
+): Promise<void> {
+  setProgress("Loading…");
+
+  /* Dynamic import so JSZip only loads when button is clicked */
+  const JSZip = (await import("jszip")).default;
+  const zip = new JSZip();
+
+  /* Add the HTML memories page */
+  zip.file("memories.html", buildMemoriesHtml());
+
+  /* Fetch and add each video */
+  const videoFolder = zip.folder("videos")!;
+  const videoNames  = ["video1.mp4", "video2.mp4", "video3.mp4", "video4.mp4"];
+
+  for (let i = 0; i < videoNames.length; i++) {
+    const name = videoNames[i];
+    setProgress(`Downloading video ${i + 1} of 4…`);
+    try {
+      const res = await fetch(`/videos/${name}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = await res.blob();
+      videoFolder.file(name, blob);
+    } catch {
+      /* If a video isn't found (placeholder), add a tiny placeholder note */
+      videoFolder.file(
+        name.replace(".mp4", "-README.txt"),
+        `Replace this file with your real ${name} video.\nDrop it into the videos/ folder.`
+      );
+    }
+  }
+
+  /* Generate ZIP and trigger download */
+  setProgress("Packing ZIP…");
+  const zipBlob = await zip.generateAsync(
+    { type: "blob", compression: "DEFLATE", compressionOptions: { level: 1 } },
+    (meta) => setProgress(`Packing… ${Math.round(meta.percent)}%`)
+  );
+
+  const url = URL.createObjectURL(zipBlob);
+  const a   = document.createElement("a");
+  a.href     = url;
+  a.download = "our-birthday-memories.zip";
+  a.click();
+  URL.revokeObjectURL(url);
+  setProgress("Done! ✅");
+  setTimeout(() => setProgress(""), 2500);
 }
 
 /* Share */
@@ -92,8 +201,12 @@ const HEARTS = ["💕","💖","💗","❤️","💝","💞","🌸","✨"];
    Component
 ══════════════════════════════════════════════════ */
 export default function EndingPage() {
-  const router  = useRouter();
+  const router   = useRouter();
   const firedRef = useRef(false);
+
+  /* Download state */
+  const [dlProgress, setDlProgress] = useState("");
+  const isDownloading = dlProgress !== "" && dlProgress !== "Done! ✅";
 
   /* Initial confetti burst + recurring */
   useEffect(() => {
@@ -104,7 +217,11 @@ export default function EndingPage() {
     return () => clearInterval(id);
   }, []);
 
-  const replay = useCallback(() => router.push("/password"), [router]);
+  const replay   = useCallback(() => router.push("/password"), [router]);
+  const handleDl = useCallback(() => {
+    if (isDownloading) return;
+    downloadMemoriesZip(setDlProgress).catch(() => setDlProgress(""));
+  }, [isDownloading]);
 
   return (
     <div className={styles.page}>
@@ -185,10 +302,23 @@ export default function EndingPage() {
             📤&nbsp;Share
           </motion.button>
 
-          {/* Download Memories */}
-          <motion.button className={styles.secondaryBtn} onClick={downloadMemories}
-            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-            💾&nbsp;Download Memories
+          {/* Download Memories ZIP */}
+          <motion.button
+            className={styles.secondaryBtn}
+            onClick={handleDl}
+            disabled={isDownloading}
+            whileHover={isDownloading ? {} : { scale: 1.05 }}
+            whileTap={isDownloading ? {}  : { scale: 0.96 }}
+            aria-label="Download all memories as ZIP"
+            style={{ minWidth: "180px", opacity: isDownloading ? 0.75 : 1 }}
+          >
+            {isDownloading ? (
+              <>⏳&nbsp;{dlProgress}</>
+            ) : dlProgress === "Done! ✅" ? (
+              <>✅&nbsp;Downloaded!</>
+            ) : (
+              <>💾&nbsp;Download Memories</>
+            )}
           </motion.button>
         </motion.div>
 

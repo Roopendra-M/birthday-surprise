@@ -1,0 +1,4 @@
+# This file keeps the data/ directory in git.
+# data/memories.json is gitignored to protect private messages.
+# The API will create memories.json automatically when needed (local dev only).
+# On Vercel, messages are sent via email — no file needed.

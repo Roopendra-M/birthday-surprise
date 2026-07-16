@@ -1,0 +1,419 @@
+/* ============================================================
+   feelings-page.module.css — Emotional final message page
+   Continues the pastel pink glassmorphism design language
+   ============================================================ */
+
+/* ── Page shell ── */
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--gradient-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Ambient glows ── */
+.radialGlow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(ellipse 78% 66% at 50% 50%,
+    rgba(255,192,220,.52) 0%, rgba(255,220,238,.24) 45%, transparent 75%);
+}
+.blobTL {
+  position: fixed; top: -130px; left: -130px;
+  width: 440px; height: 440px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,180,220,.42) 0%, transparent 70%);
+  filter: blur(40px); pointer-events: none; z-index: 1;
+  animation: blobPulse 7s ease-in-out infinite;
+}
+.blobBR {
+  position: fixed; bottom: -130px; right: -130px;
+  width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(169,142,255,.30) 0%, transparent 70%);
+  filter: blur(40px); pointer-events: none; z-index: 1;
+  animation: blobPulse 8.5s ease-in-out infinite reverse;
+}
+.blobTC {
+  position: fixed; top: -70px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 280px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,200,100,.15) 0%, transparent 70%);
+  filter: blur(32px); pointer-events: none; z-index: 1;
+  animation: blobPulse 11s ease-in-out infinite;
+}
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.10); }
+}
+/* override for blobTC since it uses translateX */
+.blobTC { animation: blobPulseTC 11s ease-in-out infinite; }
+@keyframes blobPulseTC {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50%       { transform: translateX(-50%) scale(1.10); }
+}
+
+/* ── Soft spotlight ── */
+.spotlight {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(ellipse 50% 45% at 50% 30%,
+    rgba(255,240,250,.60) 0%, transparent 65%);
+  animation: spotlightBreath 5s ease-in-out infinite;
+}
+@keyframes spotlightBreath {
+  0%, 100% { opacity: .6; }
+  50%       { opacity: 1;  }
+}
+
+/* ── Floating decorations layer ── */
+.decorLayer {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 2;
+  overflow: hidden;
+}
+.decor {
+  position: absolute;
+  user-select: none;
+  animation: decorFloat linear infinite;
+  will-change: transform;
+}
+@keyframes decorFloat {
+  0%   { transform: translateY(0)    rotate(0deg)   scale(1);    opacity: 0.75; }
+  25%  { transform: translateY(-20px) rotate(7deg)  scale(1.05); opacity: 0.85; }
+  50%  { transform: translateY(-9px)  rotate(-5deg) scale(1.02); opacity: 0.80; }
+  75%  { transform: translateY(-25px) rotate(4deg)  scale(1.06); opacity: 0.88; }
+  100% { transform: translateY(0)    rotate(0deg)   scale(1);    opacity: 0.75; }
+}
+
+/* Drifting hearts from the bottom */
+.driftHeart {
+  position: absolute;
+  bottom: -60px;
+  animation: driftHeartUp linear infinite;
+  pointer-events: none;
+  user-select: none;
+}
+@keyframes driftHeartUp {
+  0%   { transform: translateY(0)           rotate(-12deg) scale(0.8); opacity: 0;   }
+  8%   {                                                                opacity: 0.8; }
+  90%  {                                                                opacity: 0.4; }
+  100% { transform: translateY(-110vh)      rotate(360deg) scale(1.2); opacity: 0;   }
+}
+
+/* ── Main ── */
+.main {
+  position: relative; z-index: 10;
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.8rem; padding: 3rem 1rem 5rem;
+}
+
+/* ── Heading ── */
+.headingWrap { text-align: center; max-width: 600px; }
+
+.heading {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 800; letter-spacing: -0.025em; line-height: 1.15;
+  background: linear-gradient(135deg, #e91e78 0%, #f97bb8 35%, #a98eff 65%, #e91e78 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradShift 4s linear infinite;
+}
+@keyframes gradShift {
+  0%   { background-position: 0%   center; }
+  100% { background-position: 300% center; }
+}
+
+.subtitleWrap {
+  margin-top: 0.75rem;
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  color: var(--pink-text-muted);
+  line-height: 1.7;
+}
+
+.subtitleLine {
+  display: block;
+  animation: fadeInUp 0.7s ease both;
+}
+.subtitleLine:nth-child(2) { animation-delay: 0.2s; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mascots row ── */
+.mascotsRow {
+  display: flex; gap: 2rem; align-items: flex-end; justify-content: center;
+}
+.mascot {
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  animation: mascotBounce 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 6px 16px rgba(249,85,142,.20));
+}
+.mascot:nth-child(2) { animation-delay: 0.8s; animation-duration: 4s; }
+
+@keyframes mascotBounce {
+  0%, 100% { transform: translateY(0)    rotate(-4deg) scale(1); }
+  40%       { transform: translateY(-14px) rotate(4deg)  scale(1.06); }
+  70%       { transform: translateY(-6px)  rotate(-2deg) scale(1.02); }
+}
+
+/* ── Question ── */
+.question {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+  font-weight: 700;
+  color: var(--pink-800);
+  text-align: center;
+  max-width: 50ch;
+  line-height: 1.55;
+}
+
+/* ── Letter card ── */
+.letterCard {
+  width: min(560px, 96vw);
+  background: rgba(255, 252, 246, 0.92);
+  border: 2px solid rgba(200, 160, 140, 0.28);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 8px 32px rgba(200,120,100,.12),
+    0 2px 8px rgba(200,120,100,.08),
+    0 0 0 1px rgba(255,255,255,.85) inset;
+  padding: 2rem 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Paper texture lines */
+.letterCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px, transparent 27px,
+    rgba(180,140,120,.10) 27px, rgba(180,140,120,.10) 28px
+  );
+  background-position: 0 52px; /* offset so top is blank */
+  pointer-events: none;
+  border-radius: var(--radius-xl);
+}
+
+/* Left red margin line */
+.letterCard::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 2.5rem; bottom: 0;
+  width: 1.5px;
+  background: rgba(220,100,100,.22);
+  pointer-events: none;
+}
+
+/* Corner folds */
+.paperFold {
+  position: absolute;
+  width: 28px; height: 28px;
+  border-style: solid;
+  border-color: transparent;
+  pointer-events: none;
+}
+.paperFoldTR {
+  top: 0; right: 0;
+  border-width: 28px 28px 0 0;
+  border-right-color: rgba(200,160,140,.20);
+}
+.paperFoldBL {
+  bottom: 0; left: 0;
+  border-width: 0 0 28px 28px;
+  border-left-color: rgba(200,160,140,.16);
+}
+
+/* Ribbon decoration on top */
+.letterRibbon {
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  font-size: 1.4rem;
+  animation: decorFloat 4s ease-in-out infinite;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 180px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  color: #4a2535;
+  line-height: 1.85;
+  padding-left: 3rem; /* past the margin line */
+  padding-top: 0.5rem;
+  caret-color: #e91e78;
+}
+.textarea::placeholder {
+  color: rgba(180,120,140,.55);
+  font-style: italic;
+}
+
+/* ── Submit button ── */
+.submitBtn {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 1rem 2.8rem;
+  background: var(--gradient-button);
+  border: none; border-radius: var(--radius-full);
+  color: white;
+  font-family: var(--font-baloo), sans-serif;
+  font-size: 1.1rem; font-weight: 800;
+  cursor: pointer;
+  box-shadow: var(--shadow-button);
+  overflow: hidden;
+  transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow:
+    var(--shadow-button),
+    0 0 32px rgba(249,85,142,.55),
+    0 0 64px rgba(249,85,142,.25);
+}
+.submitBtn:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+.submitBtn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.btnShimmer {
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.40) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+  pointer-events: none;
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200%  center; }
+}
+
+/* Ripple on click */
+.ripple {
+  position: absolute; inset: 0;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,.30);
+  transform: scale(0);
+  animation: rippleOut 0.55s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes rippleOut {
+  to { transform: scale(2.5); opacity: 0; }
+}
+
+/* ── Loading spinner ── */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2.5px solid rgba(255,255,255,.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Success card ── */
+.successCard {
+  width: min(500px, 94vw);
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255,180,210,.52);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--glass-shadow), 0 0 60px rgba(249,85,142,.20);
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+}
+
+.successHeart {
+  font-size: clamp(3rem, 10vw, 5rem);
+  animation: heartbeatBig 1.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(249,85,142,.55));
+}
+@keyframes heartbeatBig {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.22); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.16); }
+  70%       { transform: scale(1); }
+}
+
+.successTitle {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #e91e78 0%, #f97bb8 50%, #a98eff 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.35;
+}
+
+.successSub {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: var(--pink-text-muted);
+}
+
+.successGlow {
+  position: absolute; inset: -8px;
+  border-radius: calc(var(--radius-2xl) + 8px);
+  background: radial-gradient(ellipse, rgba(249,85,142,.30) 0%, transparent 70%);
+  filter: blur(16px);
+  animation: glowPulse 2.5s ease-in-out infinite;
+  pointer-events: none; z-index: 0;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: .6; }
+  50%       { opacity: 1;  }
+}
+
+/* Success card wrapper for relative positioning */
+.successWrap {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+/* ── Footer ── */
+.footer {
+  position: relative; z-index: 10;
+  padding: 1.25rem 1rem;
+  font-family: var(--font-patrick), cursive;
+  font-size: 0.9rem;
+  color: var(--pink-text-muted);
+  text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem; flex-wrap: wrap;
+  border-top: 1px solid rgba(255,180,210,.28);
+  background: rgba(255,255,255,.22);
+  backdrop-filter: blur(8px);
+}
+
+.endingLink {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  color: var(--pink-700);
+  background: rgba(255,255,255,.70);
+  border: 1.5px solid rgba(255,160,198,.45);
+  border-radius: var(--radius-full);
+  padding: 0.4rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 10px rgba(249,85,142,.10);
+}
+.endingLink:hover {
+  background: rgba(255,240,248,.90);
+  border-color: rgba(249,123,184,.65);
+}
+
+.footerSep {
+  opacity: 0.4;
+  font-size: 0.8rem;
+}

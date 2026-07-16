@@ -1,0 +1,273 @@
+/* ============================================================
+   memory-theater.module.css — Cinematic video theater page
+   Continues the pastel pink glassmorphism design language
+   ============================================================ */
+
+/* ── Page shell ── */
+.page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--gradient-bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Ambient glows (same pattern as other pages) ── */
+.radialGlow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  background: radial-gradient(ellipse 75% 65% at 50% 50%,
+    rgba(255,192,220,.48) 0%, rgba(255,220,238,.22) 45%, transparent 75%);
+}
+.blobTL {
+  position: fixed; top: -130px; left: -130px;
+  width: 440px; height: 440px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,180,220,.40) 0%, transparent 70%);
+  filter: blur(40px); pointer-events: none; z-index: 1;
+  animation: blobPulse 7s ease-in-out infinite;
+}
+.blobBR {
+  position: fixed; bottom: -130px; right: -130px;
+  width: 480px; height: 480px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(169,142,255,.30) 0%, transparent 70%);
+  filter: blur(40px); pointer-events: none; z-index: 1;
+  animation: blobPulse 8.5s ease-in-out infinite reverse;
+}
+.blobTC {
+  position: fixed; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(249,123,184,.20) 0%, transparent 70%);
+  filter: blur(35px); pointer-events: none; z-index: 1;
+  animation: blobPulse 10s ease-in-out infinite;
+}
+@keyframes blobPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.10); }
+}
+
+/* ── Main content ── */
+.main {
+  position: relative; z-index: 10;
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.5rem; padding: 2rem 1rem 3rem;
+}
+
+/* ── Heading ── */
+.headingWrap { text-align: center; }
+.heading {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 800; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #e91e78 0%, #f97bb8 40%, #a98eff 70%, #e91e78 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradShift 4s linear infinite;
+}
+@keyframes gradShift {
+  0%   { background-position: 0%   center; }
+  100% { background-position: 300% center; }
+}
+.counter {
+  font-family: var(--font-patrick), cursive;
+  font-size: 0.9rem; color: var(--pink-text-muted);
+  margin-top: 0.25rem;
+  animation: fadeInUp 0.5s ease both;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════
+   PLAYER — Glassmorphism video card
+═══════════════════════════════════════ */
+.playerOuter {
+  position: relative;
+  width: min(720px, 96vw);
+}
+
+/* Pink glow ring behind the player */
+.playerGlow {
+  position: absolute; inset: -12px;
+  border-radius: calc(var(--radius-2xl) + 12px);
+  background: radial-gradient(ellipse at center,
+    rgba(249,85,142,.38) 0%, rgba(249,85,142,.18) 40%, transparent 72%);
+  filter: blur(20px);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: .7; transform: scale(1); }
+  50%       { opacity: 1;  transform: scale(1.04); }
+}
+
+.playerCard {
+  position: relative; z-index: 1;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1.5px solid rgba(255, 180, 210, 0.52);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    var(--glass-shadow),
+    0 0 0 1px rgba(255,255,255,.70) inset,
+    0 0 40px rgba(249,85,142,.15);
+  overflow: hidden;
+}
+
+/* ── Video wrapper with fade transitions ── */
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0d0010;
+  overflow: hidden;
+  cursor: pointer; /* clicking wrapper toggles play since video has pointer-events:none */
+}
+
+.videoEl {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  transition: opacity 0.55s ease;
+  /* Allow pointer events to reach the window-level mousemove handler
+     so the custom cursor dot/ring/sparkle/heart trail renders over the video */
+  pointer-events: none;
+}
+.videoEl.videoFadeOut { opacity: 0; }
+.videoEl.videoFadeIn  { opacity: 1; }
+
+/* Placeholder shown while video is loading or invalid */
+.videoPlaceholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, #1a0025 0%, #0d0018 100%);
+  color: rgba(255,255,255,.7);
+  font-family: var(--font-baloo), sans-serif;
+  font-size: 0.9rem; text-align: center;
+  padding: 1rem;
+}
+.videoPlaceholder .placeholderEmoji { font-size: 3rem; line-height: 1; }
+
+/* ── Progress bar ── */
+.progressBar {
+  width: 100%; height: 4px;
+  background: rgba(255,160,198,.25);
+  cursor: pointer;
+  position: relative;
+}
+.progressFill {
+  height: 100%;
+  background: var(--gradient-button);
+  transition: width 0.25s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Controls bar ── */
+.controls {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(255,255,255,.42);
+  backdrop-filter: blur(12px);
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ctrlGroup {
+  display: flex; align-items: center; gap: 0.4rem;
+}
+
+.ctrlBtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,.72);
+  border: 1.5px solid rgba(255,160,198,.40);
+  border-radius: var(--radius-full);
+  font-size: 1rem; cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(249,85,142,.10);
+}
+.ctrlBtn:hover {
+  background: rgba(255,240,248,.90);
+  border-color: rgba(249,123,184,.65);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(249,85,142,.20);
+}
+.ctrlBtn:active { transform: translateY(0); }
+.ctrlBtnWide {
+  width: auto; padding: 0 1rem;
+  font-family: var(--font-baloo), sans-serif;
+  font-size: 0.82rem; font-weight: 700;
+  white-space: nowrap;
+}
+
+.ctrlSep {
+  width: 1px; height: 22px;
+  background: rgba(255,160,198,.35); flex-shrink: 0;
+}
+
+/* ── Decorations layer ── */
+.decorLayer {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 5;
+  overflow: hidden;
+}
+
+.decor {
+  position: absolute;
+  user-select: none;
+  animation: decorFloat linear infinite;
+  will-change: transform;
+}
+
+@keyframes decorFloat {
+  0%   { transform: translateY(0)    rotate(0deg)   scale(1);    opacity: 0.8; }
+  25%  { transform: translateY(-22px) rotate(8deg)  scale(1.05); opacity: 0.9; }
+  50%  { transform: translateY(-10px) rotate(-6deg) scale(1.02); opacity: 0.85; }
+  75%  { transform: translateY(-28px) rotate(5deg)  scale(1.07); opacity: 0.9; }
+  100% { transform: translateY(0)    rotate(0deg)   scale(1);    opacity: 0.8; }
+}
+
+/* ── Confetti overlay ── */
+.confettiMsg {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 9999;
+  background: rgba(255,245,250,.80);
+  backdrop-filter: blur(12px);
+  animation: fadeInUp 0.5s ease both;
+  text-align: center; padding: 2rem;
+}
+.confettiHeading {
+  font-family: var(--font-baloo), sans-serif;
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #e91e78, #f97bb8, #a98eff, #e91e78);
+  background-size: 300% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradShift 3s linear infinite;
+  margin-bottom: 0.5rem;
+}
+.confettiSub {
+  font-family: var(--font-patrick), cursive;
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  color: var(--pink-text-muted);
+}
+.confettiHeart {
+  font-size: clamp(3rem, 10vw, 5rem);
+  animation: heartbeat 1.4s ease-in-out infinite;
+  margin-top: 0.75rem;
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.18); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.14); }
+  70%       { transform: scale(1); }
+}

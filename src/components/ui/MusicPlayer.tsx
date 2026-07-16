@@ -4,6 +4,20 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "./MusicPlayer.module.css";
 
+/* ── Global music control API ──────────────────────────────
+   Exposed so other pages (e.g. MemoryTheater) can pause/resume
+   the background music player without prop-drilling.
+   Usage: window.__musicPlayer?.pause() / .resume()
+───────────────────────────────────────────────────────── */
+declare global {
+  interface Window {
+    __musicPlayer?: {
+      pause: () => void;
+      resume: () => void;
+    };
+  }
+}
+
 /* ══════════════════════════════════════════════════
    Config — Playlist of birthday songs
    ══════════════════════════════════════════════════ */
@@ -183,6 +197,18 @@ export default function MusicPlayer() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- volume/muted/loop read once via lazy initializers
   }, [playNext]);
+
+  /* ── Expose global music control API ── */
+  useEffect(() => {
+    const pauseMusic = () => { audioRef.current?.pause(); };
+    const resumeMusic = () => {
+      const a = audioRef.current;
+      if (!a) return;
+      a.play().catch(() => { /* autoplay blocked */ });
+    };
+    window.__musicPlayer = { pause: pauseMusic, resume: resumeMusic };
+    return () => { delete window.__musicPlayer; };
+  }, []);
 
   /* ── Persist helpers ── */
   const persist = useCallback((patch: Partial<SavedState>) => {

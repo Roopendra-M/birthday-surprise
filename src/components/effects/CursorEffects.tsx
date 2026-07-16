@@ -25,10 +25,14 @@ export default function CursorEffects() {
   const ringRef   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    /* ── Touch device guard ── */
-    const isTouch =
-      window.matchMedia("(pointer: coarse)").matches ||
-      navigator.maxTouchPoints > 0;
+    /* ── Touch device guard ──
+       (pointer: coarse) alone isn't enough — Windows laptops with
+       trackpads report coarse touch support even without a touchscreen.
+       Adding (hover: none) ensures we only bail on TRUE touch-only
+       devices (phones/tablets) that have no hover capability at all. */
+    const isTouch = window.matchMedia(
+      "(pointer: coarse) and (hover: none)"
+    ).matches;
     if (isTouch) return;
 
     /* ── Setup ── */

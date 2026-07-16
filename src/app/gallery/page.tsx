@@ -210,12 +210,12 @@ export default function GalleryPage() {
         {/* ── Continue to ending ── */}
         <motion.button
           className={styles.continueBtn}
-          onClick={() => router.push("/ending")}
+          onClick={() => router.push("/feelings")}
           whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}>
           <span className={styles.continueBtnShimmer} aria-hidden="true" />
-          See the Ending&nbsp;🎉
+          Share Your Feelings&nbsp;❤️
         </motion.button>
       </main>
 
