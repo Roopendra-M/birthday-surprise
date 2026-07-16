@@ -60,7 +60,7 @@ function buildMemoriesHtml(): string {
       <div style="font-size:2.8rem;margin-bottom:8px;">${v.emoji}</div>
       <div style="font-size:0.7rem;letter-spacing:2px;opacity:0.6;text-transform:uppercase;margin-bottom:4px;">Video ${v.num} of 4</div>
       <div style="font-family:Georgia,serif;font-size:0.92rem;font-style:italic;color:#ffc8de;">${v.label}</div>
-      <div style="margin-top:10px;font-size:0.72rem;opacity:0.55;">📁 videos/video${v.num}.mp4</div>
+      <div style="margin-top:10px;font-size:0.72rem;opacity:0.55;">📁 videos/Video${v.num}.mp4</div>
     </div>`).join("");
 
   const songCards = [
@@ -131,7 +131,7 @@ async function downloadMemoriesZip(
 
   /* Fetch and add each video */
   const videoFolder = zip.folder("videos")!;
-  const videoNames  = ["video1.mp4", "video2.mp4", "video3.mp4", "video4.mp4"];
+  const videoNames  = ["Video1.mp4", "Video2.mp4", "Video3.mp4", "Video4.mp4"];
 
   for (let i = 0; i < videoNames.length; i++) {
     const name = videoNames[i];

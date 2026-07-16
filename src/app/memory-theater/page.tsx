@@ -16,10 +16,10 @@ import styles from "./memory-theater.module.css";
    Config
 ══════════════════════════════════════════════════ */
 const VIDEOS = [
-  "/videos/video1.mp4",
-  "/videos/video2.mp4",
-  "/videos/video3.mp4",
-  "/videos/video4.mp4",
+  "/videos/Video1.mp4",
+  "/videos/Video2.mp4",
+  "/videos/Video3.mp4",
+  "/videos/Video4.mp4",
 ] as const;
 
 const TOTAL = VIDEOS.length;
