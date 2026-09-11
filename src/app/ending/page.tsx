@@ -24,60 +24,34 @@ async function fireEnding() {
 }
 
 /* ══════════════════════════════════════════════════
-   Gallery data (for HTML page)
+   Gallery data (real photos)
 ══════════════════════════════════════════════════ */
-const MEMORIES = [
-  { emoji: "🎂", caption: "Birthday Wishes!",     bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)" },
-  { emoji: "🌸", caption: "Beautiful You",         bg: "linear-gradient(135deg,#ead5ff,#c4b0ff)" },
-  { emoji: "💕", caption: "With All My Love",      bg: "linear-gradient(135deg,#fff5e8,#ffb870)" },
-  { emoji: "✨", caption: "You're a Star!",        bg: "linear-gradient(135deg,#fffbe8,#ffe066)" },
-  { emoji: "🎉", caption: "Let's Celebrate!",      bg: "linear-gradient(135deg,#e8fff0,#6ee7b7)" },
-  { emoji: "🦋", caption: "Spreading Joy",         bg: "linear-gradient(135deg,#e8f5ff,#93c5fd)" },
-  { emoji: "🌈", caption: "All the Colors of You", bg: "linear-gradient(135deg,#ffeef7,#c4b0ff)" },
-  { emoji: "💫", caption: "Making Memories",       bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)" },
+const PHOTO_FILES = [
+  { src: "/photos/file_0000000022a071faa1310622e4732cd2.png", caption: "Our first chapter 💕",   filename: "photo1.png" },
+  { src: "/photos/ChatGPT Image Aug 29, 2026, 11_06_34 PM.png", caption: "You & me 🌸",         filename: "photo2.png" },
+  { src: "/photos/IMG_20260301_140042.jpg",                    caption: "Shopping dates 🛍️",   filename: "photo3.jpg" },
+  { src: "/photos/IMG_20260301_140056.jpg",                    caption: "Together always ❤️", filename: "photo4.jpg" },
+  { src: "/photos/IMG_20260307_204136.jpg",                    caption: "Night vibes ✨",       filename: "photo5.jpg" },
+  { src: "/photos/SAVE_20260311_174458.jpg",                   caption: "Stuck in your eyes 👁️", filename: "photo6.jpg" },
+  { src: "/photos/nothing.jpg",                               caption: "Beautiful you 🌺",    filename: "photo7.jpg" },
 ];
 
 /* ══════════════════════════════════════════════════
-   Build HTML memories page (goes inside the ZIP)
+   Build the memories HTML — uses base64 photo data
 ══════════════════════════════════════════════════ */
-function buildMemoriesHtml(): string {
-  const cards = MEMORIES.map((m, i) => `
-    <div style="display:inline-block;margin:14px;padding:14px 14px 36px;background:white;border-radius:3px;
+function buildMemoriesHtml(photoDataMap: Record<string, string>): string {
+  const cards = PHOTO_FILES.map((p, i) => {
+    const b64 = photoDataMap[p.filename];
+    const imgSrc = b64 ? `data:image/${p.filename.endsWith(".png") ? "png" : "jpeg"};base64,${b64}` : "";
+    return `
+    <div style="display:inline-block;margin:14px;padding:14px 14px 42px;background:white;border-radius:3px;
       box-shadow:0 4px 20px rgba(0,0,0,.12);transform:rotate(${(i % 3 - 1) * 3}deg);vertical-align:top;">
-      <div style="width:140px;height:140px;background:${m.bg};display:flex;align-items:center;justify-content:center;font-size:3.5rem;">${m.emoji}</div>
-      <p style="margin:8px 0 0;font-family:Georgia,serif;font-size:0.85rem;color:#5a3848;text-align:center;font-style:italic;">${m.caption}</p>
-    </div>`).join("");
-
-  const videoCards = [
-    { num: 1, label: "Our First Memory",  emoji: "🎬" },
-    { num: 2, label: "A Special Moment",  emoji: "💕" },
-    { num: 3, label: "Laughs & Joy",      emoji: "😄" },
-    { num: 4, label: "One Last Memory",   emoji: "✨" },
-  ].map(v => `
-    <div style="display:inline-block;margin:10px;width:180px;background:linear-gradient(135deg,#1a0025,#2d0040);
-      border-radius:14px;padding:18px 14px 14px;text-align:center;color:white;vertical-align:top;
-      box-shadow:0 8px 28px rgba(233,30,120,.35);">
-      <div style="font-size:2.8rem;margin-bottom:8px;">${v.emoji}</div>
-      <div style="font-size:0.7rem;letter-spacing:2px;opacity:0.6;text-transform:uppercase;margin-bottom:4px;">Video ${v.num} of 4</div>
-      <div style="font-family:Georgia,serif;font-size:0.92rem;font-style:italic;color:#ffc8de;">${v.label}</div>
-      <div style="margin-top:10px;font-size:0.72rem;opacity:0.55;">📁 videos/Video${v.num}.mp4</div>
-    </div>`).join("");
-
-  const songCards = [
-    { title: "Birthday Melody",   vibe: "Magic Vibes",     emoji: "✨" },
-    { title: "Celebration Beats", vibe: "Party Groove",    emoji: "🎈" },
-    { title: "Sweet Wishes",      vibe: "Loving Acoustic", emoji: "🌸" },
-  ].map(s => `
-    <div style="display:inline-flex;align-items:center;gap:14px;margin:8px;padding:14px 20px;
-      background:rgba(255,255,255,.85);border-radius:50px;
-      box-shadow:0 4px 16px rgba(249,85,142,.14);vertical-align:middle;max-width:260px;">
-      <span style="font-size:1.8rem;">${s.emoji}</span>
-      <div style="text-align:left;">
-        <div style="font-weight:700;color:#6b2046;font-size:0.9rem;">${s.title}</div>
-        <div style="font-size:0.75rem;color:#b5607a;font-style:italic;">${s.vibe}</div>
+      <div style="width:180px;height:200px;overflow:hidden;border-radius:2px;">
+        ${imgSrc ? `<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;"/>` : `<div style="width:180px;height:200px;background:linear-gradient(135deg,#ffd6ea,#f97bb8);display:flex;align-items:center;justify-content:center;font-size:3rem;">📸</div>`}
       </div>
-      <span style="font-size:1.2rem;margin-left:auto;">🎵</span>
-    </div>`).join("");
+      <p style="margin:10px 0 0;font-family:Georgia,serif;font-size:0.85rem;color:#5a3848;text-align:center;font-style:italic;">${p.caption}</p>
+    </div>`;
+  }).join("");
 
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <title>Our Special Memories 💕</title>
@@ -99,58 +73,105 @@ function buildMemoriesHtml(): string {
   <div class="divider"></div><br>
   <div style="max-width:960px;margin:0 auto;">${cards}</div>
 
-  <h2 style="color:#a98eff;">🎬 Memory Theater</h2>
-  <div class="divider" style="background:linear-gradient(90deg,#a98eff,#f97bb8);"></div><br>
-  <p class="sub" style="margin-bottom:20px;">Four cinematic moments, played just for you · Videos are in the <strong>videos/</strong> folder</p>
-  <div style="max-width:800px;margin:0 auto;">${videoCards}</div>
-
-  <h2 style="color:#f97bb8;">🎵 Music That Played</h2>
-  <div class="divider"></div><br>
-  <p class="sub" style="margin-bottom:20px;">The songs that made this moment magical</p>
-  <div style="max-width:700px;margin:0 auto;">${songCards}</div>
-
   <footer>Made with ❤️ just for you · ${new Date().toLocaleDateString("en-IN", { year:"numeric", month:"long", day:"numeric" })}</footer>
 </body></html>`;
 }
 
 /* ══════════════════════════════════════════════════
-   ZIP download helper
-   Bundles: memories.html + videos/video1-4.mp4
+   Build the letter HTML
+══════════════════════════════════════════════════ */
+function buildLetterHtml(): string {
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>A Letter For You 💌</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+  *{box-sizing:border-box;}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#fff5f9,#ffeef7,#f8e8ff);padding:40px 20px;font-family:'Patrick Hand',Georgia,serif;}
+  .card{max-width:680px;width:100%;background:#fffdf8;border-radius:4px;
+    box-shadow:0 8px 40px rgba(0,0,0,.13);padding:3rem 3rem 3rem 4.5rem;position:relative;
+    background-image:repeating-linear-gradient(transparent 0px,transparent 31px,rgba(180,200,255,.13) 31px,rgba(180,200,255,.13) 32px);
+    background-size:100% 32px;background-position:0 36px;}
+  .card::before{content:"";position:absolute;left:3.8rem;top:0;bottom:0;width:2px;background:rgba(255,120,150,.25);}
+  .letter{font-size:1.05rem;line-height:2;color:#3a2a35;white-space:pre-wrap;word-break:break-word;}
+  .signature{margin-top:2rem;text-align:right;font-family:'Patrick Hand',Georgia,serif;}
+  .yours{display:block;font-size:1rem;color:#9b6b80;text-decoration:line-through;text-decoration-thickness:2px;
+    text-decoration-color:#c2557a;opacity:0.75;letter-spacing:0.04em;}
+  .name{display:block;font-size:1.2rem;font-weight:700;color:#3a2a35;letter-spacing:0.03em;margin-top:2px;}
+  h1{font-size:1.8rem;color:#e91e78;text-align:center;margin:0 0 2rem;font-family:'Patrick Hand',Georgia,serif;}
+</style></head>
+<body>
+<div class="card">
+  <h1>💌 A Letter For You</h1>
+  <div class="letter">Hi Mouni... 💕
+
+Firstly, thanks for everything. I'm a guy who is kind of boring, introverted, and not really good at expressing things blabla 😅. But nenu ala unna kuda, nuvvu naatho matladav. Sometimes, I honestly felt like maybe I'm something special to you.
+
+Bangalore night walks… you and me. ❤️
+Ippudu kaadhu, but starting stage lo mana kalisinappudu, daily talks… those little things still stay in my mind.
+
+I always wanted to be with you, but somewhere I know that maybe I'm not the person who suits you. I never really knew how to say that.
+
+I saw many eyes, but somehow I got stuck in yours.
+
+Nen ninnu eppudu ignore chesthunna ani anukoku. Emo… malli matladadam start chestha. Kaani adi sudden ga stop aithe, ee sari nenu teeskolenu.
+
+I don't know where we'll end up or what happens next. I just wanted to tell you what I genuinely feel, without making it complicated.
+
+Always be happy, Mouni. ❤️</div>
+  <div class="signature">
+    <span class="yours">Yours</span>
+    <span class="name">Roopendra</span>
+  </div>
+</div>
+</body></html>`;
+}
+
+/* ══════════════════════════════════════════════════
+   ZIP download helper — photos + letter + memories
 ══════════════════════════════════════════════════ */
 async function downloadMemoriesZip(
   setProgress: (p: string) => void
 ): Promise<void> {
   setProgress("Loading…");
 
-  /* Dynamic import so JSZip only loads when button is clicked */
   const JSZip = (await import("jszip")).default;
   const zip = new JSZip();
+  const photosFolder = zip.folder("photos")!;
 
-  /* Add the HTML memories page */
-  zip.file("memories.html", buildMemoriesHtml());
-
-  /* Fetch and add each video */
-  const videoFolder = zip.folder("videos")!;
-  const videoNames  = ["Video1.mp4", "Video2.mp4", "Video3.mp4", "Video4.mp4"];
-
-  for (let i = 0; i < videoNames.length; i++) {
-    const name = videoNames[i];
-    setProgress(`Downloading video ${i + 1} of 4…`);
+  /* Fetch all real photos and collect base64 for HTML embedding */
+  const photoDataMap: Record<string, string> = {};
+  for (let i = 0; i < PHOTO_FILES.length; i++) {
+    const p = PHOTO_FILES[i];
+    setProgress(`Downloading photo ${i + 1} of ${PHOTO_FILES.length}…`);
     try {
-      const res = await fetch(`/videos/${name}`);
+      const res = await fetch(p.src);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const blob = await res.blob();
-      videoFolder.file(name, blob);
+      /* Store in photos/ folder */
+      photosFolder.file(p.filename, blob);
+      /* Also convert to base64 for embedding in HTML */
+      const base64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const result = reader.result as string;
+          resolve(result.split(",")[1] ?? "");
+        };
+        reader.readAsDataURL(blob);
+      });
+      photoDataMap[p.filename] = base64;
     } catch {
-      /* If a video isn't found (placeholder), add a tiny placeholder note */
-      videoFolder.file(
-        name.replace(".mp4", "-README.txt"),
-        `Replace this file with your real ${name} video.\nDrop it into the videos/ folder.`
-      );
+      /* photo unavailable — skip */
     }
   }
 
-  /* Generate ZIP and trigger download */
+  /* Add memories HTML (with embedded photos) */
+  zip.file("memories.html", buildMemoriesHtml(photoDataMap));
+
+  /* Add the letter HTML */
+  zip.file("letter.html", buildLetterHtml());
+
+  /* Generate ZIP */
   setProgress("Packing ZIP…");
   const zipBlob = await zip.generateAsync(
     { type: "blob", compression: "DEFLATE", compressionOptions: { level: 1 } },
