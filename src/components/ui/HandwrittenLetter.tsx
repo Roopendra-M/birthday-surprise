@@ -6,26 +6,28 @@ import { useRouter } from "next/navigation";
 import styles from "./HandwrittenLetter.module.css";
 
 /* ── Default letter text ─────────────────────────────────── */
-const DEFAULT_LETTER = `Dear Special One, 💕
+const DEFAULT_LETTER = `Hi Mouni... 💕
 
-Today is YOUR day — a day the whole world is brighter simply because you're in it. ✨
+Firstly, thanks for everything. I'm a guy who is kind of boring, introverted, and not really good at expressing things blabla 😅. But nenu ala unna kuda, nuvvu naatho matladav. Sometimes, I honestly felt like maybe I'm something special to you.
 
-You deserve every beautiful moment, every laugh, and every little thing that makes your heart smile.
+Bangalore night walks… you and me. ❤️
+Ippudu kaadhu, but starting stage lo mana kalisinappudu, daily talks… those little things still stay in my mind.
 
-You are so loved — more than words could ever say. From the way you light up a room to the kindness you show every single day...
+I always wanted to be with you, but somewhere I know that maybe I'm not the person who suits you. I never really knew how to say that.
 
-Here's to YOU — and this magical celebration! 🎂
+I saw many eyes, but somehow I got stuck in yours.
 
-May all your wishes come true, and may this year bring you more joy than ever before. 🌟
+Nen ninnu eppudu ignore chesthunna ani anukoku. Emo… malli matladadam start chestha. Kaani adi sudden ga stop aithe, ee sari nenu teeskolenu.
 
-With all the love in my heart,
-Always yours ❤️`;
+I don't know where we'll end up or what happens next. I just wanted to tell you what I genuinely feel, without making it complicated.
+
+Always be happy, Mouni. ❤️`;
 
 /* ── Polaroid data ───────────────────────────────────────── */
 const PHOTOS = [
-  { emoji: "🎂", caption: "Birthday wishes!", bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)", rot: -4 },
-  { emoji: "🌸", caption: "Beautiful moments", bg: "linear-gradient(135deg,#ead5ff,#c4b0ff)", rot: 3  },
-  { emoji: "💕", caption: "With all my love",  bg: "linear-gradient(135deg,#fff5e8,#ffd09a)", rot: -2 },
+  { src: "/photos/file_0000000022a071faa1310622e4732cd2.png", caption: "Our memories 💕", rot: -4 },
+  { src: "/photos/SAVE_20260311_174458.jpg",                  caption: "Together always ❤️", rot: 3  },
+  { src: "/photos/IMG_20260307_204136.jpg",                   caption: "Night vibes 🌙",    rot: -2 },
 ];
 
 const TYPEWRITER_SPEED = 22; // ms per character
@@ -138,13 +140,20 @@ export default function HandwrittenLetter() {
           >
             {/* Tape */}
             <div className={styles.tape} style={{ transform: `translateX(-50%) rotate(${-p.rot + 2}deg)` }} />
-            {/* Photo */}
-            <div className={styles.polaroidPhoto} style={{ background: p.bg }}>
-              {p.emoji}
+            {/* Real photo */}
+            <div className={styles.polaroidPhoto}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.src} alt={p.caption} className={styles.polaroidImg} />
             </div>
             <div className={styles.polaroidCaption}>{p.caption}</div>
           </motion.div>
         ))}
+      </div>
+
+      {/* ── Roopendra's signature ── */}
+      <div className={styles.signatureBlock}>
+        <span className={styles.signatureYours}>Yours</span>
+        <span className={styles.signatureName}>Roopendra</span>
       </div>
 
       {/* ── Continue button ── */}

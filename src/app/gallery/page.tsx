@@ -10,14 +10,13 @@ import styles from "./gallery-page.module.css";
    Gallery data
 ══════════════════════════════════════════════════ */
 const MEMORIES = [
-  { id: 1, emoji: "🎂", caption: "Birthday Wishes!", bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)", rot: -3 },
-  { id: 2, emoji: "🌸", caption: "Beautiful You",    bg: "linear-gradient(135deg,#ead5ff,#c4b0ff)", rot: 2  },
-  { id: 3, emoji: "💕", caption: "With All My Love", bg: "linear-gradient(135deg,#fff5e8,#ffb870)", rot: -2 },
-  { id: 4, emoji: "✨", caption: "You're a Star!",   bg: "linear-gradient(135deg,#fffbe8,#ffe066)", rot: 3  },
-  { id: 5, emoji: "🎉", caption: "Let's Celebrate!", bg: "linear-gradient(135deg,#e8fff0,#6ee7b7)", rot: -1 },
-  { id: 6, emoji: "🦋", caption: "Spreading Joy",    bg: "linear-gradient(135deg,#e8f5ff,#93c5fd)", rot: 2  },
-  { id: 7, emoji: "🌈", caption: "All the Colors of You", bg: "linear-gradient(135deg,#ffeef7,#c4b0ff)", rot: -3 },
-  { id: 8, emoji: "💫", caption: "Making Memories",  bg: "linear-gradient(135deg,#ffd6ea,#f97bb8)", rot: 1  },
+  { id: 1, src: "/photos/file_0000000022a071faa1310622e4732cd2.png", caption: "Our first chapter 💕",       rot: -3 },
+  { id: 2, src: "/photos/ChatGPT Image Aug 29, 2026, 11_06_34 PM.png", caption: "You & me 🌸",           rot: 2  },
+  { id: 3, src: "/photos/IMG_20260301_140042.jpg",                    caption: "Shopping dates 🛍️",       rot: -2 },
+  { id: 4, src: "/photos/IMG_20260301_140056.jpg",                    caption: "Together always ❤️",     rot: 3  },
+  { id: 5, src: "/photos/IMG_20260307_204136.jpg",                    caption: "Night vibes ✨",          rot: -1 },
+  { id: 6, src: "/photos/SAVE_20260311_174458.jpg",                   caption: "Stuck in your eyes 👁️", rot: 2  },
+  { id: 7, src: "/photos/nothing.jpg",                                caption: "Beautiful you 🌺",       rot: -3 },
 ];
 
 type Direction = 1 | -1;
@@ -160,9 +159,10 @@ export default function GalleryPage() {
               >
                 {/* Tape */}
                 <div className={styles.tape} />
-                {/* Photo area */}
-                <div className={styles.photo} style={{ background: mem.bg }}>
-                  <span className={styles.photoEmoji}>{mem.emoji}</span>
+                {/* Real photo */}
+                <div className={styles.photo}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={mem.src} alt={captions[index]} className={styles.photoImg} />
                   {/* Hover zoom label */}
                   <div className={styles.zoomHint} aria-hidden="true">🔍 Preview</div>
                 </div>
@@ -232,8 +232,9 @@ export default function GalleryPage() {
               role="dialog" aria-label={`Memory preview: ${captions[index]}`}>
               <button className={styles.closeBtn} onClick={() => setLightbox(false)} aria-label="Close">✕</button>
               {/* Large photo */}
-              <div className={styles.lightboxPhoto} style={{ background: mem.bg }}>
-                <span className={styles.lightboxEmoji}>{mem.emoji}</span>
+              <div className={styles.lightboxPhoto}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={mem.src} alt={captions[index]} className={styles.lightboxImg} />
               </div>
               <p className={styles.lightboxCaption}>{captions[index]}</p>
               {/* Lightbox prev/next */}

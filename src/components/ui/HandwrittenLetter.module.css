@@ -181,6 +181,15 @@
   overflow: hidden;
 }
 
+.polaroidImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 1px;
+  display: block;
+}
+
 .polaroidCaption {
   font-family: var(--font-patrick), cursive;
   font-size: 0.75rem;
@@ -202,6 +211,33 @@
   border: 1px solid rgba(200,180,100,0.20);
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* ── Signature block ─────────────────────────────────── */
+.signatureBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.1rem;
+  padding-right: 1rem;
+  font-family: var(--font-patrick), cursive;
+}
+
+.signatureYours {
+  font-size: 1rem;
+  color: #9b6b80;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #c2557a;
+  opacity: 0.75;
+  letter-spacing: 0.04em;
+}
+
+.signatureName {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3a2a35;
+  letter-spacing: 0.03em;
 }
 
 /* ── Continue button ──────────────────────────────────────── */
