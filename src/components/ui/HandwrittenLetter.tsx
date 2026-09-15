@@ -6,22 +6,28 @@ import { useRouter } from "next/navigation";
 import styles from "./HandwrittenLetter.module.css";
 
 /* ── Default letter text ─────────────────────────────────── */
-const DEFAULT_LETTER = `Hi Mouni... 💕
+const DEFAULT_LETTER = `Hi Mouni 🤍...
 
-Firstly, thanks for everything. I'm a guy who is kind of boring, introverted, and not really good at expressing things blabla 😅. But nenu ala unna kuda, nuvvu naatho matladav. Sometimes, I honestly felt like maybe I'm something special to you.
+Firstly, thanks for everything. Nenu konchem boring, introvert type... ekkuva mandi tho easy ga mingle avvanu, naa feelings kuda proper ga express cheyyalenu 😅. Kaani nenu ala unna kuda, nuvvu naatho matladav. Sometimes, I genuinely felt like maybe I’m something special to you.
 
-Bangalore night walks… you and me. ❤️
-Ippudu kaadhu, but starting stage lo mana kalisinappudu, daily talks… those little things still stay in my mind.
+Ee madhya nuvvu chaala gurthosthunnav. Em special reason kuda ledu... just ala, random ga edho oka time lo mana conversations gurthosthayi. Mana daggara unna aa small moments anni miss avuthunna.
 
-I always wanted to be with you, but somewhere I know that maybe I'm not the person who suits you. I never really knew how to say that.
+Bangalore lo manam ala walks ki vellam kadha... nuvvu, nenu ala walk chesthu edho random topics maatladukunevallam. Honestly, adi naaku chaala special 🌃. Appudu avi normal moments la anipinchayi, but ippudu gurthu cheskunte chaala baaga anipisthundi.
 
-I saw many eyes, but somehow I got stuck in yours.
+Starting lo manam daily maatladukunevallam kadha... aa phase kuda chaala miss avuthunna.
 
-Nen ninnu eppudu ignore chesthunna ani anukoku. Emo… malli matladadam start chestha. Kaani adi sudden ga stop aithe, ee sari nenu teeskolenu.
+And one more thing... nenu ninnu chaala saarlu ibbandhi pettanu. Daaniki really sorry 🙃. Ninnu hurt cheyyalani or ibbandhi pettalani eppudu intention kaadu. Konni sarlu naa feelings ni ela handle cheyyalo, ela cheppalo naake teliyaka ala jarigipoyindi.
 
-I don't know where we'll end up or what happens next. I just wanted to tell you what I genuinely feel, without making it complicated.
+Nen ninnu ignore chesthunna ani eppudu anukoku. Konni sarlu nene silent aipotha, anthe.
 
-Always be happy, Mouni. ❤️`;
+Honestly, I always wanted to be with you. Kaani life lo konni things mana control lo undavu kadha.
+
+Nuvvu eppudu ilane chinna pillala allari chesthu, happy ga undu 😂. And please, ninnu nuvvu eppudu restrict cheskoku. Neeku nachinattu undu, neeku nachina things cheyyi.
+
+Mana madhya em jarigina, manam kalisi spend chesina aa small moments naaku eppudu special gaane untayi.
+
+Take care, Mouni. 🤍
+Always be happy.`;
 
 /* ── Polaroid data ───────────────────────────────────────── */
 const PHOTOS = [
