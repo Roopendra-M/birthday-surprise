@@ -32,21 +32,21 @@ Always be happy.`;
 /* ── Polaroid data ───────────────────────────────────────── */
 const PHOTOS = [
   { src: "/photos/file_0000000022a071faa1310622e4732cd2.png", caption: "Our memories 💕", rot: -4 },
-  { src: "/photos/SAVE_20260311_174458.jpg",                  caption: "Together always ❤️", rot: 3  },
-  { src: "/photos/IMG_20260307_204136.jpg",                   caption: "Night vibes 🌙",    rot: -2 },
+  { src: "/photos/SAVE_20260311_174458.jpg", caption: "Together always ❤️", rot: 3 },
+  { src: "/photos/IMG_20260307_204136.jpg", caption: "Night vibes 🌙", rot: -2 },
 ];
 
 const TYPEWRITER_SPEED = 22; // ms per character
 
 export default function HandwrittenLetter() {
-  const router  = useRouter();
-  const [text,      setText]      = useState("");
-  const [fullText]                 = useState(DEFAULT_LETTER);
-  const [editing,   setEditing]   = useState(false);
-  const [editText,  setEditText]  = useState(DEFAULT_LETTER);
-  const [done,      setDone]      = useState(false);
+  const router = useRouter();
+  const [text, setText] = useState("");
+  const [fullText] = useState(DEFAULT_LETTER);
+  const [editing, setEditing] = useState(false);
+  const [editText, setEditText] = useState(DEFAULT_LETTER);
+  const [done, setDone] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const indexRef    = useRef(0);
+  const indexRef = useRef(0);
 
   /* ── Typewriter effect ─────────────────────────────────── */
   const startTypewriter = useCallback((src: string) => {
@@ -109,11 +109,11 @@ export default function HandwrittenLetter() {
         {/* Flower & heart stickers */}
         <span className={styles.sticker} style={{ top: -18, left: 18, fontSize: 28 }}>🌸</span>
         <span className={styles.sticker} style={{ top: -14, right: 52, fontSize: 22 }}>🌺</span>
-        <span className={styles.sticker} style={{ bottom: 12, left: -8,  fontSize: 20 }}>🌼</span>
-        <span className={styles.sticker} style={{ top:  60, left:  14,  fontSize: 16 }}>💕</span>
-        <span className={styles.sticker} style={{ top: 130, left:  10,  fontSize: 14 }}>❤️</span>
+        <span className={styles.sticker} style={{ bottom: 12, left: -8, fontSize: 20 }}>🌼</span>
+        <span className={styles.sticker} style={{ top: 60, left: 14, fontSize: 16 }}>💕</span>
+        <span className={styles.sticker} style={{ top: 130, left: 10, fontSize: 14 }}>❤️</span>
         <span className={styles.sticker} style={{ bottom: 60, right: 12, fontSize: 18 }}>💖</span>
-        <span className={styles.sticker} style={{ top:  20, right: 12,  fontSize: 15 }}>✨</span>
+        <span className={styles.sticker} style={{ top: 20, right: 12, fontSize: 15 }}>✨</span>
 
         {/* Letter content */}
         {editing ? (
